@@ -21,55 +21,59 @@ Files provided:
 `$ docker build -t dhi.io/mysql:lts-debian13 .`   
 
 ### Step 3: Runing a MySQL container
-`$ docker run --rm -v /home/app/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw dhi.io/mysql:lts-debian13 mysqld`   
+```
+$ docker run --run --name my-mysql \
+  -e MYSQL_ROOT_PASSWORD=my-secret-pw \
+  -v /home/app/mysql:/var/lib/mysql \
+  dhi.io/mysql:lts-debian13 mysqld
+```   
 or  
-`$ docker compose up -d`  
+```
+-Setup Docker named volume: run once
+$ docker volume create --driver local \
+  --opt type=none \
+  --opt o=bind \
+  --opt device=/home/app/mysql \
+  mysql-data
 
+-Run a container:
+$ docker compose up -d`  
+```
 <br/><br/>
 
-### Testing/Debugging:
-We use two images for Docker multi-stage builds:
-  - dhi.io/php:8.5.8-debian13-dev
-  - dhi.io/php:8.5.8-debian13-fpm  
-Below are some basic commands how to test/debug both images:
-
-- **Testing:**
+### Some other docker MysQl commands:
 ```
--For dhi.io/php:8.5.8-debian13-dev image:
-$ docker run -it --rm -v "$PWD":/app -w /app dhi.io/php:8.5.8-debian13-dev              #Running the container
-$ docker run -it --rm -v "$PWD":/app -w /app dhi.io/php:8.5.8-debian13-dev script.php   #Run script.php, or
-$ docker exec -it <containerID> script.php                                              #Run script.php
+$ docker run --name=my-mysql \                      # Running the container
+  -e MYSQL_ROOT_PASSWORD=my-secret-pw \
+  -d dhi.io/mysql:lts-debian13 mysqld
 
--For dhi.io/php:8.5.8-debian13-fpm image:
-$ docker run --rm -v $(pwd):/app -w /app -p 9000:9000 dhi.io/php:8.5.8-debian13-fpm     #Running the container
-$ SCRIPT_FILENAME=script.php REQUEST_METHOD=GET cgi-fcgi -bind -connect 127.0.0.1:9000  #run script.php
+$ docker run --name my-mysql \                      # Running the container with options
+  -e MYSQL_ROOT_PASSWORD=my-secret-pw \
+  -e MYSQL_OPTIONS="--max-connections=50 --thread-cache-size=16" \
+  -d dhi.io/mysql:lts-debian13  mysqld
+
+
+$ docker run --rm -e MYSQL_ROOT_PASSWORD=my-secret-pw dhi.io/mysql:lts-debian13 mysql --help     # Show mysql options
+$ docker run --rm -e MYSQL_ROOT_PASSWORD=my-secret-pw dhi.io/mysql:lts-debian13 mysql --version  # show mysql version
+
+# Login mysql shell:
+$ docker exec -it <containerID> mysql -uroot -p
+$ docker exec -it <containerID> mysql -uroot -p -e "SHOW VARIABLES LIKE 'max_connections';
+
+# Create a database:
+$ docker exec -it <containerID> mysql -uroot -p -e "CREATE DATABASE mydb;"
+
+# Create a user with privileges
+$ docker exec -it <containerID> mysql -uroot -p -e \
+  "CREATE USER 'myuser'@'%' IDENTIFIED BY 'mypassword'; \
+   GRANT ALL PRIVILEGES ON mydb.* TO 'myuser'@'%';"
+
+# Run sql scripts
+$ docker exec -i <containerID> mysql -uroot -pmy-secret-pw  < /path/to/init.sql
+
 ```
-  
 
-- **Debugging:**
-```
--For dhi.io/php:8.5.8-debian13-dev image
-$ docker run -it --rm -v "$PWD":/app -w /app dhi.io/php:8.5.8-debian13-dev     #Running the container
-$ docker debug <containerID>                                                   #Container debug mode
-$ docker exec -it <containerID> bash                                           #Container shell mode
-$ $ docker run --rm -it --entrypoint /bin/bash dhi.io/php:8.5.8-debian13-dev   #Container shell mode
-
-$ docker run --rm dhi.io/php:8.5.8-debian13-dev -v       #Show php vertion
-$ docker run --rm dhi.io/php:8.5.8-debian13-dev -m       #List all php extensions
-
-
-
--For dhi.io/php:8.5.8-debian13-fpm image
-$ docker run -it --rm -v "$PWD":/app -w /app dhi.io/php:8.5.8-debian13-fpm       #Running the container
-$ docker debug <containerID>                                                     #Debug mode
-
-$ docker run --rm -it -v $(pwd):/app -w /app dhi.io/php:8.5.8-debian13-fpm  -t   #Testing php-fpm.conf
-
-$ docker run --rm dhi.io/php:8.5.8-debian13-fpm -v       #Show php-fpm vertion
-$ docker run --rm dhi.io/php:8.5.8-debian13-fpm -m       #List all php-fpm extensions
-`````
-
-<br/><br/>
+<br/>
 
 ### Basic docker commands:
 ```
