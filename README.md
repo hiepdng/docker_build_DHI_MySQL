@@ -5,8 +5,6 @@ This repository is used to create an MySQl server based on [MySQL Docker Hardene
 
 Files provided:  
 - scripts.sh:
-  - Pull httpd.conf and php.init  from dhi.io/php:8.5.8-debian13-dev .
-  - You need to modify variables inside the script.sh to approreate modify the php.ini
   - Create mount directory on the host system
 - Dockerfile:
   - Used to create your own local image. Modify it if neccessary.
@@ -20,12 +18,12 @@ Files provided:
 `$ sh script.sh`
 
 ### Step 2: Building a PHP-FPM image
-`$ docker build -t dhi.io/php:8.5.8-debian13-fpm .`   
+`$ docker build -t dhi.io/mysql:lts-debian13 .`   
 
-### Step 3: Runing a PHP-FPM container
-`$ docker run --rm -v /home/app/php:/var/www/html/ dhi.io/php:8.5.8-debian13-fpm`  
+### Step 3: Runing a MySQL container
+`$ docker run --rm -v /home/app/mysql:/var/lib/mysql dhi.io/mysql:lts-debian13 mysqld`  
 or  
-`$ docker run --rm -v $(pwd):/app -w /app dhi.io/php:8.5.8-debian13-fpm`  
+`$ docker run --rm -v $(pwd):/var/lin/mysql dhi.io/mysql:lts-debian13 mysqld`  
 or  
 `$ docker compose up -d`  
 
