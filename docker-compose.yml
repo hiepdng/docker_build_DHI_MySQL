@@ -1,0 +1,11 @@
+services:
+  db:
+    image: dhi.io/mysql:lts-debian13
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: my-secret-pw
+    command: mysqld
+    volumes:
+      - /home/app/mysql:/var/lib/mysql
+volumes:
+  /home/app/mysql:
