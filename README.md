@@ -1,4 +1,4 @@
-## Mysql server using Docker Hardened Image (dhi.io/mysql:lts-debian13, ver 9.7.1)
+## Mysql server using Docker Hardened Image (dhi.io/mysql:lts-debian13, ver 9.7.1)  
 
 ### Introduction:
 This repository is used to create an MySQl server based on [MySQL Docker Hardened Image (DHI)](https://hub.docker.com/hardened-images/catalog/dhi/mysql)  
