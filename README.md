@@ -21,9 +21,7 @@ Files provided:
 `$ docker build -t dhi.io/mysql:lts-debian13 .`   
 
 ### Step 3: Runing a MySQL container
-`$ docker run --rm -v /home/app/mysql:/var/lib/mysql dhi.io/mysql:lts-debian13 mysqld`  
-or  
-`$ docker run --rm -v $(pwd):/var/lin/mysql dhi.io/mysql:lts-debian13 mysqld`  
+`$ docker run --rm -v /home/app/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw dhi.io/mysql:lts-debian13 mysqld`   
 or  
 `$ docker compose up -d`  
 
