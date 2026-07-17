@@ -4,7 +4,9 @@
 This repository is used to create an MySQl server based on [MySQL Docker Hardened Image (DHI)](https://hub.docker.com/hardened-images/catalog/dhi/mysql)  
 
 Files provided:  
-- scripts.sh:
+- scripts.sh:y
+  - Set up my.cnf for MySQL server
+  - Generate CA, Sever certificates for MySQL server
   - Create mount directory on the host system
 - Dockerfile:
   - Used to create your own local image. Modify it if neccessary.
