@@ -43,11 +43,13 @@ $ docker compose up -d`
 
 ### Some other docker MysQl commands:
 ```
-$ docker run --name=my-mysql \                      # Running the container
+-Running the container
+$ docker run --name=my-mysql \
   -e MYSQL_ROOT_PASSWORD=my-secret-pw \
   -d dhi.io/mysql:lts-debian13 mysqld
 
-$ docker run --name my-mysql \                      # Running the container with options
+-Running the container with options
+$ docker run --name my-mysql \
   -e MYSQL_ROOT_PASSWORD=my-secret-pw \
   -e MYSQL_OPTIONS="--max-connections=50 --thread-cache-size=16" \
   -d dhi.io/mysql:lts-debian13  mysqld
