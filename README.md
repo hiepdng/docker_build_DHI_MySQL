@@ -41,6 +41,39 @@ $ docker compose up -d`
 ```
 <br/><br/>
 
+### Testing Secure (SSL) MySQl connections:
+you will create two containers and make Mysql connections between them.
+```
+-Create your own network;
+$ docker network create --subnet=172.1.0.0/16 mynet123
+$ docker network ls                                      # List all network
+$ docker netowrk inspect mynet123                        # Inspect network mynet123
+
+
+-Create two containers (server and client) with their own ip addresses:
+$ docker run --name server \
+  -e MYSQL_ROOT_PASSWORD=my-secret-pw \
+  --network mynet123  --ip 172.1.0.2 \
+  --hostname client.example.con \
+  --add-host "client.example.com client":172.1.0.3 \
+  -p 3306:3306 \
+  -d dhi.io/mysql:lts-debian13  mysqld
+
+$ docker run --name client \
+  -e MYSQL_ROOT_PASSWORD=my-secret-pw \
+  --network mynet123  --ip 172.1.0.3 \
+  --hostname client.example.con \
+  --add-host "server.example.com server":172.1.0.2 \
+  -p 33060:33060 \
+  -d dhi.io/mysql:lts-debian13  mysqld
+
+
+-From client container, make MySQL connections to server container:
+$ docker exec -it client mysql -h server -uroot -p
+```
+
+<br/><br/>
+
 ### Some other docker MysQl commands:
 ```
 -Running the container
