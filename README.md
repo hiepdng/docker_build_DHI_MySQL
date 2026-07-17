@@ -22,7 +22,7 @@ Files provided:
 
 ### Step 3: Runing a MySQL container
 ```
-$ docker run --rm --name my-mysql \
+$ docker run --name my-mysql \
   -e MYSQL_ROOT_PASSWORD=my-secret-pw \
   -v /home/app/mysql:/var/lib/mysql \
   -d dhi.io/mysql:lts-debian13 mysqld
