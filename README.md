@@ -54,7 +54,7 @@ $ docker netowrk inspect mynet123                        # Inspect network mynet
 $ docker run --name server \
   -e MYSQL_ROOT_PASSWORD=my-secret-pw \
   --network mynet123  --ip 172.1.0.2 \
-  --hostname client.example.con \
+  --hostname server.example.con \
   --add-host "client.example.com client":172.1.0.3 \
   -p 3306:3306 \
   -d dhi.io/mysql:lts-debian13  mysqld
@@ -70,6 +70,7 @@ $ docker run --name client \
 
 -From client container, make MySQL connections to server container:
 $ docker exec -it client mysql -h server -uroot -p
+mysql> status;
 ```
 
 <br/><br/>
