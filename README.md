@@ -51,7 +51,7 @@ $ docker run --name=my-mysql \
 -Running the container with options
 $ docker run --name my-mysql \
   -e MYSQL_ROOT_PASSWORD=my-secret-pw \
-  -e MYSQL_OPTIONS="--max-connections=50 --thread-cache-size=16" \
+  -e MYSQL_OPTIONS="--max-connections=50 --connect_timeout=20" \
   -d dhi.io/mysql:lts-debian13  mysqld
 
 -Run container shell:
