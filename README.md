@@ -22,10 +22,10 @@ Files provided:
 
 ### Step 3: Runing a MySQL container
 ```
-$ docker run --run --name my-mysql \
+$ docker run --rm --name my-mysql \
   -e MYSQL_ROOT_PASSWORD=my-secret-pw \
   -v /home/app/mysql:/var/lib/mysql \
-  dhi.io/mysql:lts-debian13 mysqld
+  -d dhi.io/mysql:lts-debian13 mysqld
 ```   
 or  
 ```
@@ -52,6 +52,10 @@ $ docker run --name my-mysql \                      # Running the container with
   -e MYSQL_OPTIONS="--max-connections=50 --thread-cache-size=16" \
   -d dhi.io/mysql:lts-debian13  mysqld
 
+-Run container shell:
+$ docker exec -it <containerID> bash
+or
+$ docker run -it -e MYSQL_ROOT_PASSWORD=my-secret-pw  dhi.io/mysql:lts-debian13 bash
 
 $ docker run --rm -e MYSQL_ROOT_PASSWORD=my-secret-pw dhi.io/mysql:lts-debian13 mysql --help     # Show mysql options
 $ docker run --rm -e MYSQL_ROOT_PASSWORD=my-secret-pw dhi.io/mysql:lts-debian13 mysql --version  # show mysql version
