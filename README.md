@@ -64,7 +64,7 @@ $ docker run --rm -e MYSQL_ROOT_PASSWORD=my-secret-pw dhi.io/mysql:lts-debian13 
 
 # Login mysql shell:
 $ docker exec -it <containerID> mysql -uroot -p
-$ docker exec -it <containerID> mysql -uroot -p -e "SHOW VARIABLES LIKE 'max_connections';
+$ docker exec -it <containerID> mysql -uroot -p -e "SHOW VARIABLES LIKE 'max_connections';"
 
 # Create a database:
 $ docker exec -it <containerID> mysql -uroot -p -e "CREATE DATABASE mydb;"
