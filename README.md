@@ -71,6 +71,12 @@ $ docker run --name client \
 -From client container, make MySQL connections to server container:
 $ docker exec -it client mysql -h server -uroot -p
 mysql> status;
+
+
+-Remove your network and containers
+$ docker network ls
+$ docker network rm mynet123       # Delete network mynet123
+$ docker rm -f server client       # Delete sever client containers
 ```
 
 <br/><br/>
